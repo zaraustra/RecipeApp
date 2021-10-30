@@ -4,7 +4,7 @@ import * as React from "react"
 import {FontAwesome} from "@expo/vector-icons"
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
 
-import {RootTabParamList, RootTabScreenProps} from "../../types"
+import {TabStackParamList, RootTabScreenProps} from "../../types"
 import useColorScheme from "../../hooks/useColorScheme"
 import Colors from "../../constants/Colors"
 import ScreenOneZero from "../../screens/ScreenOneZero"
@@ -14,7 +14,7 @@ import SecondTabNavigator from "./SecondTab"
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
-const BottomTab = createBottomTabNavigator<RootTabParamList>()
+const BottomTab = createBottomTabNavigator<TabStackParamList>()
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -26,7 +26,7 @@ function TabBarIcon(props: {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />
 }
 
-function BottomTabNavigator() {
+function App() {
   const colorScheme = useColorScheme()
 
   return (
@@ -69,4 +69,4 @@ function BottomTabNavigator() {
   )
 }
 
-export default BottomTabNavigator
+export default App

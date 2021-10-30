@@ -2,9 +2,9 @@ import * as React from "react"
 import {createNativeStackNavigator} from "@react-navigation/native-stack"
 import ScreenTwoZero from "../../screens/ScreenTwoZero"
 import ScreenTwoOne from "../../screens/ScreenTwoOne"
-import {RootStackParamList} from "../../types"
+import {TabStackParamList} from "../../types"
 
-const Stack = createNativeStackNavigator<RootStackParamList>()
+const Stack = createNativeStackNavigator<TabStackParamList>()
 
 function SecondTabNavigator() {
   return (

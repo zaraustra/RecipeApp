@@ -1,13 +1,24 @@
 import * as React from 'react'
 import { StyleSheet } from 'react-native'
 
-import { Text, View } from '../components/Themed'
-import { RootTabScreenProps } from '../types'
+import { Text, View, Pressable } from '../components/Themed'
+import { auth } from '../firebase'
 
-export default function ScreenOneZero() {
+export default function ScreenOneZero ({ navigation }) {
+  const logout = () => {
+    auth.signOut().then(() => {
+      navigation.replace('Login')
+    })
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
+      <Text style={styles.title}>Homepage</Text>
+      <Text style={styles.email}>{auth.currentUser?.email}</Text>
+      <Pressable
+        onPress={logout}>
+        <Text center bold>Logout</Text>
+      </Pressable>
     </View>
   )
 }
@@ -16,15 +27,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
+  email: {
+    margin: 20
+  }
 })
