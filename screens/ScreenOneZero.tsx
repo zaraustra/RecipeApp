@@ -7,7 +7,7 @@ import { auth } from '../firebase'
 export default function ScreenOneZero ({ navigation }) {
   const logout = () => {
     auth.signOut().then(() => {
-      navigation.replace('Login')
+      navigation.replace('LoginStack')
     })
   }
 
