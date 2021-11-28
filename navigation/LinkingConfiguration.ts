@@ -27,7 +27,7 @@ const linking: LinkingOptions<RootStackParamList> = {
           }
         }
       },
-      ProfileModal: "profileModal",
+      MyProfile: "myProfile",
       NotFound: "*"
     }
   }

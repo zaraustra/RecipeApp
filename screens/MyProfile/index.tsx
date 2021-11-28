@@ -1,21 +1,22 @@
 import React, {useEffect, useState} from "react"
 import {StyleSheet} from "react-native"
-import {doc, getDoc} from "firebase/firestore"
 
-import {Pressable, Text, View} from "../components/Themed"
-import {auth, db} from "../firebase"
+import {Pressable, Text, View} from "../../components/Themed"
+import {auth} from "../../firebase"
+import UserService from "../../firebase/services/User"
 
-export default function ProfileModal ({navigation}) {
+interface Props {
+  navigation: any // TODO investigate how to properly type this.
+}
+
+export default function MyProfile ({navigation}: Props) {
   const [user, setUser] = useState(undefined)
   useEffect(() => {
-    getUser()
+    UserService.get().then((user) => {
+      console.log("=== user ===>", user)
+      return setUser(user)
+    })
   }, [])
-
-  const getUser = async () => {
-    const ref = doc(db, "users", auth.currentUser?.uid)
-    const docSnap = await getDoc(ref)
-    return setUser(docSnap.data())
-  }
 
   const logout = () => {
     auth.signOut().then(() => {
@@ -24,6 +25,7 @@ export default function ProfileModal ({navigation}) {
   }
   return (
     <View style={styles.container}>
+      <Text style={styles.email}>ID: {user?.uid}</Text>
       <Text style={styles.email}>E-mail: {user?.email}</Text>
       <Pressable
         onPress={logout}>

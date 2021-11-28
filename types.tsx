@@ -1,6 +1,6 @@
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
-import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import {BottomTabScreenProps} from "@react-navigation/bottom-tabs"
+import {CompositeScreenProps, NavigatorScreenParams} from "@react-navigation/native"
+import {NativeStackScreenProps} from "@react-navigation/native-stack"
 
 export type TabStackParamList = {
   MyWishlists: undefined
@@ -14,7 +14,7 @@ export type RootStackParamList = {
   Login: undefined
   Register: undefined
   App: NavigatorScreenParams<TabStackParamList> | undefined
-  ProfileModal: undefined
+  MyProfile: undefined
   NotFound: undefined
 }
 

@@ -1,5 +1,4 @@
 import React from "react"
-import {Pressable} from "react-native"
 
 import {FontAwesome} from "@expo/vector-icons"
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
@@ -7,13 +6,14 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
 import {TabStackParamList, RootTabScreenProps} from "../../types"
 import useColorScheme from "../../hooks/useColorScheme"
 import Colors from "../../constants/Colors"
-import ScreenOneZero from "../../screens/ScreenOneZero"
+import MyWishlists from "../../screens/MyWishlists"
 import SecondTabNavigator from "./SecondTab"
+import MyProfileButton from "../../components/Header/MyProfileButton"
 
 const BottomTab = createBottomTabNavigator<TabStackParamList>()
 
 function TabBarIcon (props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"]
+  name: React.ComponentProps<typeof FontAwesome>["name"],
   color: string
 }) {
   return <FontAwesome size={30} style={{marginBottom: -3}} {...props} />
@@ -30,32 +30,20 @@ function App () {
       }}>
       <BottomTab.Screen
         name="MyWishlists"
-        component={ScreenOneZero}
+        component={MyWishlists}
         options={({navigation}: RootTabScreenProps<"MyWishlists">) => ({
           title: "My Wishlists",
-          tabBarIcon: ({color}) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("ProfileModal")}
-              style={({pressed}) => ({
-                opacity: pressed ? 0.5 : 1
-              })}>
-              <FontAwesome
-                name="user-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{marginRight: 15}}
-              />
-            </Pressable>
-          )
+          tabBarIcon: ({color}) => <TabBarIcon name="list" color={color} />,
+          headerRight: () => <MyProfileButton navigation={navigation} />
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="SharedWithMe"
         component={SecondTabNavigator}
         options={{
           headerShown: false,
-          tabBarIcon: ({color}) => <TabBarIcon name="code" color={color} />
+          title: "Shared With Me",
+          tabBarIcon: ({color}) => <TabBarIcon name="users" color={color} />
         }}
       />
     </BottomTab.Navigator>

@@ -1,9 +1,9 @@
 import React from "react"
 import {TextInput, StyleSheet} from "react-native"
 
-import {Text, View, Pressable} from "../components/Themed"
-import {auth, db} from "../firebase"
-import {collection, setDoc, doc} from "firebase/firestore"
+import {Text, View, Pressable} from "../../components/Themed"
+import {auth} from "../../firebase"
+import UserService from "../../firebase/services/User"
 
 export default function Login ({navigation}) {
   const [email, onChangeEmail] = React.useState("john@bob.com")
@@ -21,15 +21,9 @@ export default function Login ({navigation}) {
 
   const handleSignUp = () => {
     auth.createUserWithEmailAndPassword(email, pwd).then(async (userCredentials) => {
-      const user = userCredentials.user
-
-      try {
-        const usersRef = collection(db, "users")
-        await setDoc(doc(usersRef, user!.uid), {email: user!.email})
-        navigation.replace("App")
-      } catch (e) {
-        console.error("Error adding document: ", e)
-      }
+      const newUser = {email}
+      await UserService.create(newUser)
+      navigation.replace("App")
     }).catch((err) => alert(err.message))
   }
 
