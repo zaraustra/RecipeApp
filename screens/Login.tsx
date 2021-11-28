@@ -1,42 +1,46 @@
-import * as React from 'react'
-import { TextInput, StyleSheet } from 'react-native'
+import React from "react"
+import {TextInput, StyleSheet} from "react-native"
 
-import { Text, View, Pressable } from '../components/Themed'
-import { auth } from '../firebase'
-import { useEffect } from 'react'
+import {Text, View, Pressable} from "../components/Themed"
+import {auth, db} from "../firebase"
+import {collection, setDoc, doc} from "firebase/firestore"
 
-export default function Login ({ navigation }) {
-  const [email, onChangeEmail] = React.useState('')
-  const [pwd, onChangePwd] = React.useState('')
+export default function Login ({navigation}) {
+  const [email, onChangeEmail] = React.useState("john@bob.com")
+  const [pwd, onChangePwd] = React.useState("Password1")
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.replace('App')
-      }
-    })
-
-    return unsubscribe
-  }, [])
+  // useEffect(() => {
+  //   const unsubscribe = auth.onAuthStateChanged(async (user) => {
+  //     if (user) {
+  //       navigation.replace('App')
+  //     }
+  //   })
+  //
+  //   return unsubscribe
+  // }, [])
 
   const handleSignUp = () => {
-    auth.createUserWithEmailAndPassword(email, pwd).then((userCredentials) => {
+    auth.createUserWithEmailAndPassword(email, pwd).then(async (userCredentials) => {
       const user = userCredentials.user
-      console.log('=== user ===>', user)
+
+      try {
+        const usersRef = collection(db, "users")
+        await setDoc(doc(usersRef, user!.uid), {email: user!.email})
+        navigation.replace("App")
+      } catch (e) {
+        console.error("Error adding document: ", e)
+      }
     }).catch((err) => alert(err.message))
   }
 
   const handleSignIn = () => {
-    auth.signInWithEmailAndPassword(email, pwd).then((userCredentials) => {
-      alert('logged in')
-      // const user = userCredentials.user
-      // console.log('=== user ===>', user)
+    auth.signInWithEmailAndPassword(email, pwd).then(() => {
+      navigation.replace("App")
     }).catch((err) => alert(err.message))
   }
 
   return (
     <View style={styles.container}>
-
       <TextInput
         style={styles.input}
         onChangeText={onChangeEmail}
@@ -64,14 +68,14 @@ export default function Login ({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center"
   },
   input: {
     padding: 10,
-    width: '90%',
-    backgroundColor: '#FFF',
-    borderColor: '#000',
+    width: "90%",
+    backgroundColor: "#FFF",
+    borderColor: "#000",
     borderRadius: 5,
     marginBottom: 10
   }

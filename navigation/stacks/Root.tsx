@@ -1,8 +1,9 @@
-import * as React from "react"
+import React from "react"
 import {createNativeStackNavigator} from "@react-navigation/native-stack"
+
 import {RootStackParamList} from "../../types"
 import NotFoundScreen from "../../screens/NotFoundScreen"
-import ModalScreen from "../../screens/ModalScreen"
+import ProfileModal from "../../screens/ProfileModal"
 import LoginStack from "./Login"
 import AppStack from "./App"
 
@@ -12,15 +13,15 @@ import AppStack from "./App"
  */
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
-function RootNavigator() {
+function RootNavigator () {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="LoginStack" component={LoginStack} options={{ headerShown: false }} />
-      <Stack.Screen name="App" component={AppStack} options={{ headerShown: false }} />
+      <Stack.Screen name="LoginStack" component={LoginStack} options={{headerShown: false}} />
+      <Stack.Screen name="App" component={AppStack} options={{headerShown: false}} />
 
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "Oops!" }} />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{title: "Oops!"}} />
+      <Stack.Group screenOptions={{presentation: "modal"}}>
+        <Stack.Screen name="ProfileModal" component={ProfileModal} options={{title: "My Profile"}}/>
       </Stack.Group>
     </Stack.Navigator>
   )

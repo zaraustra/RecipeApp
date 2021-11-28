@@ -20,5 +20,10 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "quotes": [2, "double", { "avoidEscape": true }],
+        "object-curly-spacing": [2, "never", {
+            "objectsInObjects": false,
+            "arraysInObjects": false
+        }]
     }
 }

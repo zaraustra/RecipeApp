@@ -1,5 +1,5 @@
+import React from "react"
 import {Pressable} from "react-native"
-import * as React from "react"
 
 import {FontAwesome} from "@expo/vector-icons"
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
@@ -10,51 +10,44 @@ import Colors from "../../constants/Colors"
 import ScreenOneZero from "../../screens/ScreenOneZero"
 import SecondTabNavigator from "./SecondTab"
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
 const BottomTab = createBottomTabNavigator<TabStackParamList>()
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name']
+function TabBarIcon (props: {
+  name: React.ComponentProps<typeof FontAwesome>["name"]
   color: string
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />
+  return <FontAwesome size={30} style={{marginBottom: -3}} {...props} />
 }
 
-function App() {
+function App () {
   const colorScheme = useColorScheme()
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="MyWishlists"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarActiveTintColor: Colors[colorScheme].tint
       }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="MyWishlists"
         component={ScreenOneZero}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        options={({navigation}: RootTabScreenProps<"MyWishlists">) => ({
+          title: "My Wishlists",
+          tabBarIcon: ({color}) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
+              onPress={() => navigation.navigate("ProfileModal")}
+              style={({pressed}) => ({
+                opacity: pressed ? 0.5 : 1
               })}>
               <FontAwesome
-                name="info-circle"
+                name="user-circle"
                 size={25}
                 color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
+                style={{marginRight: 15}}
               />
             </Pressable>
-          ),
+          )
         })}
       />
       <BottomTab.Screen
@@ -62,7 +55,7 @@ function App() {
         component={SecondTabNavigator}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({color}) => <TabBarIcon name="code" color={color} />
         }}
       />
     </BottomTab.Navigator>
